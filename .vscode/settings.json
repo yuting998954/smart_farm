@@ -5,9 +5,9 @@
   "editor.formatOnPaste": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+    "source.fixAll": "always",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   "editor.quickSuggestions": {
     "other": true,
@@ -15,5 +15,6 @@
     "strings": true
   },
   "eslint.experimental.useFlatConfig": true,
-  "cSpell.words": ["stylelint", "pinia", "commitlint", "unplugin"]
+  "cSpell.words": ["stylelint", "pinia", "commitlint", "unplugin"],
+  "git.ignoreLimitWarning": true
 }

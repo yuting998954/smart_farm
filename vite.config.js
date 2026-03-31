@@ -5,8 +5,7 @@ import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { TDesignResolver } from 'unplugin-vue-components/resolvers';
-
+import { TDesignResolver, AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 export default ({ mode }) => {
   const { VITE_PORT, VITE_BASE_URL } = loadEnv(mode, process.cwd());
 
@@ -17,8 +16,11 @@ export default ({ mode }) => {
       AutoImport({
         imports: ['vue', 'vue-router', 'pinia'],
         resolvers: [
-          TDesignResolver({
-            library: 'vue-next',
+          // TDesignResolver({
+          //   library: 'vue-next',
+          // }),
+          AntDesignVueResolver({
+            importStyle: false, // css in js
           }),
           IconsResolver({
             prefix: 'Icon',
@@ -29,10 +31,20 @@ export default ({ mode }) => {
         },
         dts: true,
       }),
+      // Components({
+      //   resolvers: [
+      //     TDesignResolver({
+      //       library: 'vue-next',
+      //     }),
+      //     IconsResolver({
+      //       enabledCollections: ['lets-icons'],
+      //     }),
+      //   ],
+      // }),
       Components({
         resolvers: [
-          TDesignResolver({
-            library: 'vue-next',
+          AntDesignVueResolver({
+            importStyle: false, // css in js
           }),
           IconsResolver({
             enabledCollections: ['lets-icons'],
@@ -67,13 +79,19 @@ export default ({ mode }) => {
       // 端口号
       port: VITE_PORT,
       // 监听所有地址
-      host: '0.0.0.0',
+      host: '127.0.0.1',
       // 服务启动时是否自动打开浏览器
       open: true,
       // 允许跨域
       cors: true,
       // 自定义代理规则
-      proxy: {},
+      proxy: {
+        '/api': {
+          target: 'http://10.159.14.175:8080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
       // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布
       warmup: {
         clientFiles: ['./index.html', './src/{views,components}/*'],

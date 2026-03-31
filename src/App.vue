@@ -1,10 +1,20 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import HelloWorld from './components/HelloWorld.vue';
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router';
+// import HelloWorld from './components/HelloWorld.vue';
+import layout from '@/components/layout/index.vue';
+const route = useRoute();
+// console.log(route);
+const router = useRouter();
+// const go = () => {
+//   router.push{ { path: '/login' } };
+// }
+// 是否展示layout，如果定义了layout并且为false不展示，其他情况都展示
+// const isDefinedLayout = typeof meta.layout !== 'undefined'
+// const isNotShowLayout = isDefinedLayout && routeLocationKey.meta.layout === false
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -15,9 +25,16 @@ import HelloWorld from './components/HelloWorld.vue';
         <RouterLink to="/pinia">Pinia</RouterLink>
       </nav>
     </div>
-  </header>
-
-  <RouterView />
+  </header> -->
+  <!-- <button @click="go">跳转</button>
+ <div>layout:{{ route.meta.layout }}</div>
+  {{ isNotShowLayout }}-->
+  <layout v-if="!(typeof route.meta.layout !== 'undefined' && route.meta.layout === false)">
+    <RouterView />
+  </layout>
+  <RouterView v-else />
+  <!-- <RouterView v-if="typeof route.meta.layout !== 'undefined' && route.meta.layout === false" />
+  <layout v-else /> -->
 </template>
 
 <style scoped>

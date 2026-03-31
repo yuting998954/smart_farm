@@ -4,7 +4,7 @@ import axios from 'axios';
 const instance = axios.create({
   baseURL: '/api',
   // 指定请求超时的毫秒数
-  timeout: 1000,
+  timeout: 10000,
   // 表示跨域请求时是否需要使用凭证
   withCredentials: false,
 });
@@ -19,6 +19,10 @@ instance.interceptors.request.use(
      *  config.headers.token = token
      * }
      */
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = token;
+    }
     return config;
   },
   (error) => {
